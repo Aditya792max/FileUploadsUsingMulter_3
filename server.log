@@ -1,0 +1,13 @@
+◇ injected env (1) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+Server is running on http://127.0.0.1:8080
+Server error: Error: listen EADDRINUSE: address already in use 127.0.0.1:8080
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at node:net:2206:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 8080
+}
