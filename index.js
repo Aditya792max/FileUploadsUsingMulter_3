@@ -53,7 +53,15 @@ const server = app.listen(PORT, HOST, () => {
 });
 
 server.on('error', (err) => {
-    console.error('Server error:', err);
+    console.error('Server error:',err.code);
+});
+
+server.on("error", (err) => {
+    if (err.code === "EADDRINUSE") {
+        console.log(`___Port ${PORT} is already in use.____`);
+    } else {
+        console.error(err);
+    }
 });
 
 process.on('uncaughtException', (err) => {
