@@ -7,6 +7,11 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 
 
+// Route Imports
+const UserRoutes = require("./Routes/UserRoutes.js");
+
+
+
 // const express = require("express");  .
 // const mongoose = require("mongoose");.
 // const dotenv = require("dotenv");    .
@@ -22,6 +27,9 @@ app.use(express.json());
 
 
 app.use(express.urlencoded({extended : true}));
+
+
+app.use('/user',UserRoutes);
 
 // app.use(express.urlencoded({extended: true/false}));
 // This is a built-in middleware function in Express that parses incoming requests 
@@ -72,4 +80,14 @@ process.on('unhandledRejection', (reason) => {
 });
 
 
+
+MONGODB_URI = process.env.MONGODB_URI;
+
+mongoose.connect(MONGODB_URI, {
+}).then(() => {
+      console.log('Connected to MongoDB');
+}).catch((error) => {
+     console.error('Error connecting to MongoDB:', error);
+     process.exit(1);
+});
 
