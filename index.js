@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 
 // Route Imports
 const UserRoutes = require("./Routes/UserRoutes.js");
+const User = require("./Models/UserModels.js");
 
 
 
@@ -51,9 +52,22 @@ app.use('/uploads', express.static(uploadsDir));
 app.set('view engine', 'ejs');
 app.set('views', viewsDir);
 
-app.get('/', (req, res) => {
-    res.render('homepage');
+
+
+app.get("/", async (req, res) => {
+    try {
+        const users = await User.find();
+        res.render("homepage", {
+            users: users
+            
+        });
+        console.log(`Users are: ${users}`);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(err.message);
+    }
 });
+
 
 // Start server and attach error handlers
 const server = app.listen(PORT, HOST, () => {

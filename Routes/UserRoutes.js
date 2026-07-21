@@ -42,23 +42,77 @@ router.post("/create", async (req, res) => {
 });
 
 
+
+
 router.get("/all", async (req, res) => {
+
     try {
-        const users = await User.find();
+
+        res.render("homepage", {
+            users
+        });
+
         return res.status(200).json({
             success: true,
             message: "All users fetched successfully",
             count: users.length,
             data: users,
         });
+
     } catch (error) {
+
         return res.status(500).json({
             success: false,
             message: "Error fetching the user information",
             error: error.message,
         });
+
     }
+
 });
+
+router.get("/byMail", async(req,res) => {
+    try{
+        console.log(req.body);
+        const {email} = req.body;
+
+        if(!email){
+            return res.status(400).json({
+                success : false,
+                message : "Please enter the email to search"
+            });
+        }
+        
+        const user = await User.findOne({email});
+
+        if(!user){
+            return res.status(404).json({
+                success : false,
+                message : "Specified User Not found"
+            });
+        }
+
+        console.log(`User Name : ${user.name}\nUser Email : ${user.email}\nUser ID : ${user.id}`);
+
+        return res.status(200).json({
+            success : true,
+            message : "Successfully found the specified user",
+            data : user,
+            id: user.id
+        });
+        
+
+    }catch(error){
+        return res.status(500).json({
+            success : false,
+            message : "Error fetching Users",
+            error : error.message
+        });
+    }
+})
+
+
+
 
 
 
